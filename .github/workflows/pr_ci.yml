@@ -1,0 +1,14 @@
+name: Pull Request CI
+
+on:
+  push
+    # pull_request:
+    #   branches:
+    #     - main
+
+jobs:
+    changelog_updates:
+        uses: ./.github/workflows/changelog_updates.yml
+
+    tox:
+        uses: ./.github/workflows/poetry_run_tox.yml
