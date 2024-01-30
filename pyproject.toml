@@ -11,6 +11,7 @@ homepage = "https://github.com/JonathanCBU/financify"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pylightxl = "^1.61"
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.0.16"

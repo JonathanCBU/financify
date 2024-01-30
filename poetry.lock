@@ -607,6 +607,16 @@ plugins = ["importlib-metadata"]
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pylightxl"
+version = "1.61"
+description = "A light weight excel read/writer for python27 and python3 with no dependencies"
+optional = false
+python-versions = ">=2.7"
+files = [
+    {file = "pylightxl-1.61.tar.gz", hash = "sha256:2c59f12d2ae96b6ca7adcd15b053ec01bd881a8fcb592324bd56c0b223400463"},
+]
+
+[[package]]
 name = "pylint"
 version = "2.17.7"
 description = "python code static checker"
@@ -1027,4 +1037,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "85dcecf9ed93ea33c8fbcf455bfee0c5025a4fef62ddd3a4cba15325cec25bd1"
+content-hash = "bdf6e652b1d8b38e1a5412a6635158c3d6723a42093287ff262db0f1e4ac1363"
