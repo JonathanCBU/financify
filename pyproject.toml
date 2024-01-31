@@ -9,8 +9,12 @@ packages = [{include = "financify"}]
 repository = "https://github.com/JonathanCBU/financify"
 homepage = "https://github.com/JonathanCBU/financify"
 
+[tool.poetry.scripts]
+ci = "financify.__ci__:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
+toml = "^0.10.2"
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.0.16"
@@ -42,7 +46,7 @@ indent = 4
 verbose = false
 
 [tool.mypy]
-python_version = "^3.10"
+python_version = "3.10"
 pretty = true
 show_traceback = true
 color_output = true
