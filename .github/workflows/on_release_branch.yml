@@ -11,7 +11,7 @@ jobs:
     outputs:
       tag: ${{ steps.verify-tag.outputs.tag }}
     env:
-      PYTHON_VERSION: 3.10
+      PYTHON_VERSION: 3.10.12
     steps:
       - uses: actions/checkout@v4
         with:
