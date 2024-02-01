@@ -11,13 +11,13 @@ jobs:
     outputs:
       tag: ${{ steps.verify-tag.outputs.tag }}
     env:
-      PYTHON_VERSION: 3.10
+      PYTHON_VERSION: 3.10.12
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
       - name: Set up Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install Poetry
@@ -39,7 +39,7 @@ jobs:
     needs: tag-version-checks
     steps:
       - name: Create draft release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.13.0
         with:
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
