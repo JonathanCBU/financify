@@ -1,0 +1,11 @@
+name: Wash Sale Detector
+input:
+  file_name: "wash_sale_example.xlsx"
+  sheet_name: "Sheet1"
+  date: "Date"
+  transaction_type: "Transaction"
+  id: "Symbol"
+  value: "Price"
+output:
+  file_name: "wash_sale_report.xlsx"
+
