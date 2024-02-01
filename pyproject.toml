@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "financify"
-version = "0.1.0"
+version = "0.2.0"
 description = "Financial math tools"
 authors = ["Jonathan Cook <jcookbme@gmail.com>"]
 license = "MIT"
@@ -9,9 +9,13 @@ packages = [{include = "financify"}]
 repository = "https://github.com/JonathanCBU/financify"
 homepage = "https://github.com/JonathanCBU/financify"
 
+[tool.poetry.scripts]
+ci = "financify.__ci__:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 pylightxl = "^1.61"
+toml = "^0.10.2"
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.0.16"
@@ -43,7 +47,7 @@ indent = 4
 verbose = false
 
 [tool.mypy]
-python_version = "^3.10"
+python_version = "3.10"
 pretty = true
 show_traceback = true
 color_output = true
