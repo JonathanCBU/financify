@@ -2,6 +2,8 @@
 
 import os
 from typing import Any, Dict, List
+from datetime import datetime
+from operator import itemgetter
 
 import pylightxl
 
@@ -37,6 +39,14 @@ class ExcelReader:
             pruned_rows.append([row[idx - 1] for idx in relevant_cols])
         return pruned_rows
 
-    def sort_by_date(self, rows: Sheet) -> Sheet:
-        """Sort sheet by date"""
-        raise NotImplementedError
+    def sort_by_date(self, rows: Sheet, date_pattern: str = "%Y/%M/%d") -> Sheet:
+        """Sort sheet by date
+
+        ..Note: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+
+        :param rows: a sheet object to be sorted
+        :param date_pattern: datetime from string format following table in note
+        """
+        for row in rows[1:]:
+            row[0] = datetime.strptime(row[0], date_pattern)
+        return sorted(rows[1:], key=itemgetter(0))
