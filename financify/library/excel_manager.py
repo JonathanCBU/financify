@@ -1,9 +1,9 @@
 """Pylightxl wrapper for spreadsheet reading/writing"""
 
 import os
-from typing import Any, Dict, List
 from datetime import datetime
 from operator import itemgetter
+from typing import Any, Dict, List
 
 import pylightxl
 
@@ -25,22 +25,32 @@ class ExcelReader:
         self.columns: List[str] = list(self.sheet.cols)
         self.rows: List[str] = list(self.sheet.rows)
 
+    @property
+    def wash_sale_cols(self) -> Dict[str, int]:
+        """Get relevant wash sale column numbers"""
+        headers = [header.strip() for header in self.sheet.row(1)]
+        return {
+            "date": headers.index(self.cfg["columns"]["date"]) + 1,
+            "transaction": headers.index(self.cfg["columns"]["transaction"]) + 1,
+            "id": headers.index(self.cfg["columns"]["id"]) + 1,
+            "price": headers.index(self.cfg["columns"]["price"]) + 1,
+        }
+
     def prune_rows(self) -> Sheet:
         """Prune irrelevant columns from data"""
-        headers = [header.strip() for header in self.sheet.row(1)]
         relevant_cols = [
-            headers.index(self.cfg["columns"]["date"]) + 1,
-            headers.index(self.cfg["columns"]["transaction"]) + 1,
-            headers.index(self.cfg["columns"]["id"]) + 1,
-            headers.index(self.cfg["columns"]["price"]) + 1,
+            self.wash_sale_cols["date"],
+            self.wash_sale_cols["transaction"],
+            self.wash_sale_cols["id"],
+            self.wash_sale_cols["price"],
         ]
         pruned_rows = []
         for row in self.rows:
             pruned_rows.append([row[idx - 1] for idx in relevant_cols])
         return pruned_rows
 
-    def sort_by_date(self, rows: Sheet, date_pattern: str = "%Y/%M/%d") -> Sheet:
-        """Sort sheet by date
+    def sort_by_id(self, rows: Sheet, date_pattern: str = "%Y/%M/%d") -> Sheet:
+        """Sort sheet by id and dates
 
         ..Note: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
@@ -49,4 +59,10 @@ class ExcelReader:
         """
         for row in rows[1:]:
             row[0] = datetime.strptime(row[0], date_pattern)
-        return sorted(rows[1:], key=itemgetter(0))
+        return sorted(
+            rows[1:],
+            key=itemgetter(
+                list(self.wash_sale_cols.keys()).index("id"),
+                list(self.wash_sale_cols.keys()).index("date"),
+            ),
+        )
