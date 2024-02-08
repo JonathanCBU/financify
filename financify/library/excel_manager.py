@@ -38,7 +38,7 @@ class ExcelReader:
         }
 
     @property
-    def idx_map(self) -> int:
+    def idx_map(self) -> Dict[str, int]:
         """pruned sheet indexes map"""
         return {
             "id": list(self.wash_sale_cols.keys()).index("id"),
@@ -83,13 +83,13 @@ class ExcelReader:
 
         :param rows: sheet sorted by ID (and ideally secondarily sorted by date)
         """
-        sheets = []
+        sheets: List[Sheet] = []
         current_id = ""
-        current_sheet = []
+        current_sheet: Sheet = []
         for row in rows:
             if row[self.idx_map["id"]] != current_id:
                 # new sheet
-                if current_sheet != []:
+                if current_sheet:
                     sheets.append(current_sheet)
                 current_id = row[self.idx_map["id"]]
                 current_sheet = [row]
