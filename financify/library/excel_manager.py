@@ -37,6 +37,16 @@ class ExcelReader:
             "price": headers.index(self.cfg["columns"]["price"]) + 1,
         }
 
+    @property
+    def idx_map(self) -> int:
+        """pruned sheet indexes map"""
+        return {
+            "id": list(self.wash_sale_cols.keys()).index("id"),
+            "transaction": list(self.wash_sale_cols.keys()).index("transaction"),
+            "date": list(self.wash_sale_cols.keys()).index("date"),
+            "price": list(self.wash_sale_cols.keys()).index("price"),
+        }
+
     def prune_wash_sale_rows(self) -> Sheet:
         """Prune irrelevant columns from data"""
         relevant_cols = [
@@ -63,7 +73,26 @@ class ExcelReader:
         return sorted(
             rows[1:],
             key=itemgetter(
-                list(self.wash_sale_cols.keys()).index("id"),
-                list(self.wash_sale_cols.keys()).index("date"),
+                self.idx_map["id"],
+                self.idx_map["date"],
             ),
         )
+
+    def get_id_sheets(self, rows: Sheet) -> List[Sheet]:
+        """Return a list of Sheet objects for each unique asset id
+
+        :param rows: sheet sorted by ID (and ideally secondarily sorted by date)
+        """
+        sheets = []
+        current_id = ""
+        current_sheet = []
+        for row in rows:
+            if row[self.idx_map["id"]] != current_id:
+                # new sheet
+                if current_sheet != []:
+                    sheets.append(current_sheet)
+                current_id = row[self.idx_map["id"]]
+                current_sheet = [row]
+            else:
+                current_sheet.append(row)
+        return sheets
