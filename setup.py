@@ -9,3 +9,6 @@ with open(
     cfg = yaml.safe_load(f)
 
 ex = ExcelReader(p, cfg["input"])
+cols = ex.prune_wash_sale_rows()
+x = ex.sort_by_id(cols)
+y = ex.get_id_sheets(x)

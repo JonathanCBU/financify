@@ -7,7 +7,8 @@ from typing import Any, Dict, List
 
 import pylightxl
 
-Sheet = List[List[Any]]
+Row = List[Any]
+Sheet = List[Row]
 
 
 class ExcelReader:
@@ -22,8 +23,8 @@ class ExcelReader:
         self.cfg = cfg
         self.database = pylightxl.readxl(os.path.join(read_loc, self.cfg["file_name"]))
         self.sheet = self.database.ws(self.cfg["sheets"][0])
-        self.columns: List[str] = list(self.sheet.cols)
-        self.rows: List[str] = list(self.sheet.rows)
+        self.columns: Sheet = list(self.sheet.cols)
+        self.rows: Sheet = list(self.sheet.rows)
 
     @property
     def wash_sale_cols(self) -> Dict[str, int]:
@@ -36,7 +37,7 @@ class ExcelReader:
             "price": headers.index(self.cfg["columns"]["price"]) + 1,
         }
 
-    def prune_rows(self) -> Sheet:
+    def prune_wash_sale_rows(self) -> Sheet:
         """Prune irrelevant columns from data"""
         relevant_cols = [
             self.wash_sale_cols["date"],
