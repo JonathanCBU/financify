@@ -9,13 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* changelog file
-* on PR github actions
-* on release branch github actions
+* Basic excel sheet parser
 
 ### Fixed
-
-* typos in tox.ini
 
 ### Changed
 
