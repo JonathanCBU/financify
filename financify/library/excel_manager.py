@@ -95,4 +95,5 @@ class ExcelReader:
                 current_sheet = [row]
             else:
                 current_sheet.append(row)
+        sheets.append(current_sheet)
         return sheets
