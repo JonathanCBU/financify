@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "financify"
 version = "0.2.0"
-description = "Financial math tools"
+description = "Personal Finance Tools"
 authors = ["Jonathan Cook <jcookbme@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -11,13 +11,13 @@ homepage = "https://github.com/JonathanCBU/financify"
 
 [tool.poetry.scripts]
 ci = "financify.__ci__:main"
-wash_sale_detector = "financify.__wash_sale_detector__:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 toml = "^0.10.2"
-pyyaml = "^6.0.1"
-pylightxl = "^1.61"
+pypdf = "^4.1.0"
+python-dotenv = "^1.0.1"
+
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.0.16"
@@ -25,7 +25,6 @@ virtualenv = "20.21.0"
 bandit = "^1.7.1"
 black = {version = "^22.12.0", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.11.4"}
-robotframework-tidy = "^3.3.2"
 mypy = "^0.991"
 mypy-extensions = "^0.4.3"
 pylint = "^2.15.9"
